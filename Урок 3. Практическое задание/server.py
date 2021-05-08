@@ -1,3 +1,4 @@
+import argparse
 import socket
 import json
 from select import select
@@ -11,7 +12,7 @@ to_write = {}
 def server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind(('localhost', 7777))
+    server_socket.bind((server_addr, port))
     server_socket.listen()
 
     while True:
@@ -69,5 +70,13 @@ def event_loop():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Great Description To Be Here')
+    parser.add_argument('-p', '--port', help='Server port')
+    parser.add_argument('-a', '--addr', help='Server ip address')
+    args = parser.parse_args()
+    port = int(args.port) if args.port else 7777
+    server_addr = args.addr if args.addr else 'localhost'
+    print(port, server_addr)
+
     tasks.append(server())
     event_loop()

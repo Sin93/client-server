@@ -53,4 +53,5 @@ if __name__ == '__main__':
     port = int(args.port) if args.port else 7777
     server_addr = args.addr if args.addr else 'localhost'
     print(port, server_addr)
+
     main()
